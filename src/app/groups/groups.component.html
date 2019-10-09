@@ -1,0 +1,19 @@
+<cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
+  <mat-list>
+    <mat-list-item *cdkVirtualFor="let group of groups">
+      <mat-icon mat-list-icon>group</mat-icon>
+      <h4 mat-line>{{group.name}}</h4>
+      <button mat-icon-button #menuTrigger="matMenuTrigger"  [matMenuTriggerFor]="menu"
+        (click)="onTriggerMenu(group)">
+        <mat-icon>more_vert</mat-icon>
+     </button>
+    </mat-list-item>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="viewDetails()"> <mat-icon mat-list-icon>remove_red_eye</mat-icon> View </button>
+      <button mat-menu-item (click)="deleteGroup()"> <mat-icon mat-list-icon>delete</mat-icon> Delete </button>
+		</mat-menu>
+  </mat-list>
+</cdk-virtual-scroll-viewport>
+<button mat-fab class="fab-bottom-right" aria-label="create new group" (click)="addNewGroup()">
+  <mat-icon>group_add</mat-icon>
+</button>

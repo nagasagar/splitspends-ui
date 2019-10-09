@@ -1,0 +1,25 @@
+
+<div layout="row" flex>
+    <mat-form-field>
+        <mat-select [(ngModel)]='potentialMember' placeholder="add new member.." [ngModelOptions]="{standalone: true}" >
+          <mat-option *ngFor="let nonmember of nonmembers" [value]="nonmember">{{nonmember.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button  type="button" (click)="addMember()"><mat-icon>add</mat-icon>add</button>
+</div>
+<cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
+  <mat-list>
+    <mat-list-item *ngFor="let member of group.members">
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h4 mat-line>{{member.name}}</h4>
+      <button mat-icon-button nofocus [matMenuTriggerFor]="menu" (click)="onTriggerMenu(member)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item nofocus (click)="removeMember()">
+      <mat-icon mat-list-icon>delete</mat-icon> Remove
+    </button>
+  </mat-menu>
+</cdk-virtual-scroll-viewport>

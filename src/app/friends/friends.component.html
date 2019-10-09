@@ -1,0 +1,19 @@
+<cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
+  <mat-list>
+    <mat-list-item *ngFor="let friend of friends">
+      <mat-icon mat-list-icon>person</mat-icon>
+      <h4 mat-line>{{friend.name}}</h4>
+      <button mat-icon-button nofocus [matMenuTriggerFor]="menu" (click)="onTriggerMenu(friend)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+  <mat-menu #menu="matMenu">
+      <button mat-menu-item nofocus (click)="removeFriend()">
+        <mat-icon mat-list-icon>person_add_disabled</mat-icon> UnFriend
+      </button>
+  </mat-menu>
+</cdk-virtual-scroll-viewport>
+<button mat-fab class="fab-bottom-right" aria-label="add new expense" (click)="addFriend()">
+  <mat-icon>person_add</mat-icon>
+</button>

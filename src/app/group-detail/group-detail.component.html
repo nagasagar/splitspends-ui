@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" class="toolbar-button-row ">
+  <span (click)="goHome()">Splitspends</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-raised-button (click)="goBack()">
+    <mat-icon>arrow_back_ios</mat-icon>Back
+  </button>
+</mat-toolbar>
+<div class="login-wrapper" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="home-mat-header-card">
+    Group Detail card {{group.name}}
+  </mat-card>
+  <mat-card class="home-mat-detail-card">
+    <nav mat-tab-nav-bar>
+      <a *ngFor="let link of navLinks" mat-tab-link #rla="routerLinkActive"
+        [routerLink]="link.path" routerLinkActive>
+        {{link.label}}
+      </a>
+    </nav>
+    <router-outlet></router-outlet>
+  </mat-card>
+</div>

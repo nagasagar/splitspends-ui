@@ -1,0 +1,44 @@
+<mat-toolbar color="primary" class="toolbar-button-row ">
+  <span>Splitspends</span>
+  <span class="toolbar-spacer"></span>
+  <button mat-raised-button (click)=navigateToLogin()>
+    <mat-icon>assignment_ind</mat-icon>Login
+  </button>
+</mat-toolbar>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <img width="200" src="assets/sslogo.png">
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Name" formControlName="name"
+            [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+          <mat-error *ngIf="submitted && f['name'].errors">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Email" formControlName="email"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <mat-error *ngIf="submitted && f['email'].errors">Email is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" type="password" formControlName="password"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+            <mat-error *ngFor="let validation of validationMessages.password">
+                <mat-error *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">{{validation.message}}</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <button mat-stroked-button color="accent" class="btn-block">Register</button>
+
+    </form>
+  </mat-card>
+</div>

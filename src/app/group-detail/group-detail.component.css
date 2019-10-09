@@ -1,0 +1,17 @@
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-button-row button,
+.toolbar-button-row a {
+  margin-right: 8px;
+}
+
+.home-mat-detail-card{
+  height:70vh;
+}
+
+.home-mat-header-card{
+  height:10vh;
+  margin-bottom: 2vh;
+}

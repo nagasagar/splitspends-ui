@@ -1,0 +1,21 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary">Add a Friend</h2>
+  </div>
+  <mat-form-field class="example-full-width">
+    <input #searchEmail matInput placeholder="email" name="email" [(ngModel)]='email' [ngModelOptions]="{standalone: true}" required ngDefaultControl >
+    <mat-error *ngIf="!searchEmail.value">email is required</mat-error>
+    <button mat-button *ngIf="email" matSuffix mat-icon-button aria-label="Clear" (click)="email=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <button mat-stroked-button type="button" (click)="searchUserByEmail(email)">search</button>
+  <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" name="friend" [(ngModel)]="friend" ngDefaultControl>
+    <mat-radio-button *ngFor="let result of searchResults" [value]="result">
+      <h4 mat-line><mat-icon>person</mat-icon> {{result.name}}</h4>
+    </mat-radio-button>
+  </mat-radio-group>
+  <hr>
+  <button *ngIf="friend" mat-stroked-button color="accent" class="btn-block" (click)="add()">add</button>
+  <button mat-stroked-button type="button" class="btn-block" (click)="close()">Cancel</button>
+</div>

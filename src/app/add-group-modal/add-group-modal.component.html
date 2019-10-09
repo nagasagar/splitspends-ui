@@ -1,0 +1,20 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary">Create a New Group</h2>
+  </div>
+  <form class="example-form" [formGroup]="addGrpForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" formControlName="name"
+        [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+      <mat-error *ngIf="submitted && f['name'].errors">Name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Members</mat-label>
+        <mat-select formControlName="members" name="members" multiple ngDefaultControl>
+          <mat-option *ngFor="let friend of friends" [value]="friend">{{friend.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    <button mat-stroked-button color="accent" type="submit" class="btn-block">Create</button>
+    <button mat-stroked-button type="button" class="btn-block" (click)="close()">Cancel</button>
+  </form>
+</div>

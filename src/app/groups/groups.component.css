@@ -1,0 +1,30 @@
+.fab-bottom-right {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 100;
+}
+
+.list-container {
+  height: 100%;
+  width: 100%;
+}
+
+.cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.lg {
+  height: 60vh;
+}
+
+.mat-list >  .mat-list-item:nth-child(2n+1){
+  background-color:white;
+}
+.mat-list >  .mat-list-item:nth-child(2n){
+  background-color:rgb(230, 228, 228);
+}
+.cdk-focused.cdk-mouse-focused:focus {
+  outline: none;
+}
