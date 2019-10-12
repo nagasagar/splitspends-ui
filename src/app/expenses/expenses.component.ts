@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Expense } from '../models/expense';
+import { MatMenuTrigger, MatDialog, MatSnackBar } from '@angular/material';
+import { ExpensesService } from '../services/expenses.service';
 
 @Component({
   selector: 'app-expenses',
@@ -7,11 +10,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpensesComponent implements OnInit {
 
-  constructor() { }
+  expenses: Expense[];
+  selectedExpense: Expense;
+  @ViewChild(MatMenuTrigger, {static: false})
+  menu: MatMenuTrigger;
+
+  constructor(
+    private expensesService: ExpensesService,
+    private changeDetector: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.expensesService.getUserExpensess()
+    .subscribe(
+      expenses => {
+        this.expenses = expenses;
+        this.changeDetector.detectChanges();
+      },
+      error => {
+        console.log(error);
+      });
   }
-  addNewGroup(): void {
 
+  onTriggerMenu(expense: Expense) {
+    this.selectedExpense = expense;
   }
+
+  deleteExpense() {
+  }
+
+  editExpense() {
+  }
+
 }

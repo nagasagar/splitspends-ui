@@ -19,6 +19,7 @@ export class UserService {
         this.tokenService.saveEmail(data.email);
         this.tokenService.saveAuthority(data.role);
         this.tokenService.saveImageUrl(data.imageUrl);
+        this.tokenService.saveCurrentUserId(data.id);
       },
       error => {
         console.log(error);

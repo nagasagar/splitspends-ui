@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { TOKEN_KEY, USERNAME_KEY, AUTHORITIES_KEY, EMAIL_KEY, IMAGE_URL } from '../constants';
+import { TOKEN_KEY, USERNAME_KEY, AUTHORITIES_KEY, EMAIL_KEY, IMAGE_URL, CURRENT_USER_ID } from '../constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
+
 
   constructor(private router: Router) { }
 
@@ -56,5 +57,13 @@ export class TokenService {
 
   public getImageUrl(): string {
     return localStorage.getItem(IMAGE_URL);
+  }
+
+  saveCurrentUserId(id: number) {
+    localStorage.removeItem(CURRENT_USER_ID);
+    localStorage.setItem(CURRENT_USER_ID, String(id));
+  }
+  getCurrentUserId(): number {
+    return Number(localStorage.getItem(CURRENT_USER_ID));
   }
 }

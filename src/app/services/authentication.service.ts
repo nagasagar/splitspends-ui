@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { TokenService } from '../services';
 import { AuthLoginInfo } from '../login/login-info';
 import { RegisterInfo } from '../register/register-info';
+import { User } from '../models/user';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -19,20 +20,21 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private tokenStorage: TokenService) {
   }
 
-  getUserProfile(): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + '/users/me', httpOptions);
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(environment.apiUrl + '/users/me', httpOptions);
   }
+
   attempAuth(credentials: AuthLoginInfo): Observable<any> {
     return this.http.post<any>(environment.apiUrl + '/auth/login', credentials, httpOptions);
   }
 
   register(info: RegisterInfo): Observable<any> {
-    return this.http.post<any>(environment.apiUrl  + '/auth/signup', info, httpOptions);
-}
-logout() {
-  this.authChange.next(false);
-  this.tokenStorage.logout();
-}
+    return this.http.post<any>(environment.apiUrl + '/auth/signup', info, httpOptions);
+  }
+  logout() {
+    this.authChange.next(false);
+    this.tokenStorage.logout();
+  }
 
 
 }

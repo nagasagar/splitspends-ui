@@ -22,6 +22,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { GroupDetailComponent } from './group-detail/group-detail.component';
 import { GroupMembersComponent } from './group-members/group-members.component';
 import { GroupExpensesComponent } from './group-expenses/group-expenses.component';
+import { ExpenseRecordPipe } from './pipes/expense-record.pipe';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { GroupExpensesComponent } from './group-expenses/group-expenses.componen
     AddFriendModalComponent,
     GroupDetailComponent,
     GroupMembersComponent,
-    GroupExpensesComponent
+    GroupExpensesComponent,
+    ExpenseRecordPipe
   ],
   imports: [
     BrowserModule,

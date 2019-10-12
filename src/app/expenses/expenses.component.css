@@ -18,3 +18,25 @@
 .lg {
   height: 60vh;
 }
+
+.mat-list >  .mat-list-item:nth-child(2n+1){
+  background-color:white;
+}
+.mat-list >  .mat-list-item:nth-child(2n){
+  background-color:rgb(230, 228, 228);
+}
+
+.cdk-focused.cdk-mouse-focused:focus {
+  outline: none;
+}
+
+mat-icon.small{
+  font-size: 18px;
+  vertical-align: bottom;
+  padding-top: 4px;
+  padding-right: 4px;
+}
+
+p.grey{
+  color: grey;
+}

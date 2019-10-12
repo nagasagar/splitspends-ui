@@ -1,6 +1,21 @@
 <cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
-    <p>activity works!</p>
+  <mat-list>
+    <mat-list-item *ngFor="let expense of expenses">
+      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      <h4 mat-line>{{expense.detail}} </h4>
+      <h4 [innerHTML]= "expense | expenseRecord"></h4>
+      <p class="grey" mat-line><mat-icon class="small" >group</mat-icon>{{expense.group.name}} , <mat-icon class="small" >attach_money</mat-icon>{{expense.amount}}</p>
+      <button mat-icon-button nofocus [matMenuTriggerFor]="menu" (click)="onTriggerMenu(expense)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+  <mat-menu #menu="matMenu">
+      <button mat-menu-item nofocus (click)="deleteExpense()">
+        <mat-icon mat-list-icon>person_add_disabled</mat-icon> UnFriend
+      </button>
+  </mat-menu>
 </cdk-virtual-scroll-viewport>
-<button mat-fab class="fab-bottom-right" aria-label="add new friend" (click) = "addNewGroup()">
-  <mat-icon>post_add</mat-icon>
+<button mat-fab class="fab-bottom-right" aria-label="add new expense" (click)="editExpense()">
+  <mat-icon>note_add</mat-icon>
 </button>
