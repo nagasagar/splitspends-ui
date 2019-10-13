@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import {} from '@angular/material/expansion';
 
 import {
   MatButtonModule,
@@ -23,7 +23,10 @@ import {
   MatCardModule,
   MatTabsModule,
   MatMenuModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSliderModule,
+  MatSlideToggleModule,
+  MatExpansionModule
 } from '@angular/material';
 
 import { MatDialogModule } from '@angular/material/dialog';
@@ -52,7 +55,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTabsModule,
     MatDialogModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   exports: [
     CommonModule,
@@ -76,7 +81,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTabsModule,
     MatDialogModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatExpansionModule
   ],
   providers: [
     MatDatepickerModule

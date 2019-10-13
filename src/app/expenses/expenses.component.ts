@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Expense } from '../models/expense';
 import { MatMenuTrigger, MatDialog, MatSnackBar } from '@angular/material';
 import { ExpensesService } from '../services/expenses.service';
+import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
 
 @Component({
   selector: 'app-expenses',
@@ -40,7 +41,13 @@ export class ExpensesComponent implements OnInit {
   deleteExpense() {
   }
 
-  editExpense() {
+  addExpense() {
+    const dialogRef = this.dialog.open(AddExpenseModalComponent, {
+      width: '750px'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
 }

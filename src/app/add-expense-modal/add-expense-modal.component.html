@@ -1,0 +1,83 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary">Add a New Expense</h2>
+    <mat-slide-toggle color="primary" [(ngModel)]="isGroupExpense">
+      Group-Expense
+    </mat-slide-toggle>
+  </div>
+  <form class="example-form" [formGroup]="addExpenseForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="detail.." formControlName="detail"
+        [ngClass]="{ 'is-invalid': submitted && f.detail.errors }">
+      <mat-error *ngIf="submitted && f['detail'].errors">detail is required</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="bill amount" formControlName="amount"
+        [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
+      <mat-error *ngIf="submitted && f['amount'].errors">amount is required</mat-error>
+    </mat-form-field>
+    <mat-form-field *ngIf="isGroupExpense">
+      <mat-label>Group</mat-label>
+      <mat-select formControlName="group" name="group" ngDefaultControl>
+        <mat-option *ngFor="let group of groups" [value]="group">{{group.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div formArrayName="payments">
+      <h5>Payments</h5>
+      <mat-divider></mat-divider>
+      <div>
+        <div class="col-12" *ngFor="let contact of paymentsFormGroup.controls; let i = index;">
+          <div [formGroupName]="''+i">
+            <mat-form-field>
+              <mat-label>payee</mat-label>
+              <mat-select formControlName="payee" name="payee" ngDefaultControl>
+                <mat-option *ngFor="let friend of friends" [value]="friend">{{friend.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="amount" formControlName="amount"
+                [ngClass]="{ 'is-invalid': submitted && getPaymentsFormGroup(i).controls['amount'].errors }">
+              <mat-error *ngIf="submitted && getPaymentsFormGroup(i).controls['amount'].errors">amount is required
+              </mat-error>
+            </mat-form-field>
+            <button mat-icon-button color="primary" type="button" (click)="addPaymentRow()" *ngIf="i==0">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" type="button" (click)="removePaymentRow(i)" *ngIf="i>0">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="shares">
+      <h5>Shares</h5>
+      <mat-divider></mat-divider>
+      <div>
+        <div class="col-12" *ngFor="let contact of shareFormGroup.controls; let i = index;">
+          <div [formGroupName]="''+i">
+            <mat-form-field>
+              <mat-label>spender</mat-label>
+              <mat-select formControlName="spender" name="spender" ngDefaultControl>
+                <mat-option *ngFor="let friend of friends" [value]="friend">{{friend.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="amount" formControlName="amount"
+                [ngClass]="{ 'is-invalid': submitted && getSharesFormGroup(i).controls['amount'].errors }">
+              <mat-error *ngIf="submitted && getSharesFormGroup(i).controls['amount'].errors">amount is required</mat-error>
+            </mat-form-field>
+            <button mat-icon-button color="primary" type="button" (click)="addShareRow()" *ngIf="i==0">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" type="button" (click)="removeShareRow(i)" *ngIf="i>0">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button mat-stroked-button color="primary" type="submit" class="btn-block">Create</button>
+    <button mat-stroked-button type="button" class="btn-block" (click)="close()">Cancel</button>
+  </form>
+</div>

@@ -8,6 +8,7 @@ describe('ExpensesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      // tslint:disable-next-line: deprecation
       imports: [ScrollDispatchModule],
       declarations: [ ExpensesComponent ]
     })
