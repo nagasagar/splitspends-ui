@@ -22,10 +22,9 @@ export class AddExpenseModalComponent implements OnInit {
   groups: Group[];
   isGroupExpense = true;
   paymentsList: FormArray;
-  newPayment: Payment;
   sharesList: FormArray;
-  newShare: Share;
-  eligibleContributers: User[];
+  exp = { amount: '' };
+  // eligibleContributers: User[];
   constructor(
     public dialogRef: MatDialogRef<AddExpenseModalComponent>,
     private friendsService: FriendsService,
@@ -52,16 +51,16 @@ export class AddExpenseModalComponent implements OnInit {
     return this.addExpenseForm.get('payments') as FormArray;
   }
 
-   // returns all form groups under contacts
-   get shareFormGroup() {
+  // returns all form groups under contacts
+  get shareFormGroup() {
     return this.addExpenseForm.get('shares') as FormArray;
   }
 
   ngOnInit() {
     this.addExpenseForm = this.formBuilder.group({
-      detail: ['', Validators.required],
-      amount: ['', Validators.required],
-      group: [''],
+      detail: ['', Validators.compose([Validators.required])],
+      amount: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])],
+      group: [null, Validators.compose([Validators.required])],
       payments: this.formBuilder.array([this.createPayment()]),
       shares: this.formBuilder.array([this.createShare()])
     });
@@ -69,11 +68,22 @@ export class AddExpenseModalComponent implements OnInit {
     this.sharesList = this.addExpenseForm.get('shares') as FormArray;
   }
 
+  onChange() {
+    const groupFormControl = this.addExpenseForm.get('group');
+    if (this.isGroupExpense) {
+      groupFormControl.setValidators(Validators.required);
+    } else {
+      groupFormControl.setValue(null);
+      groupFormControl.clearValidators();
+    }
+    groupFormControl.updateValueAndValidity();
+  }
+
   // payments formgroup
   createPayment(): FormGroup {
     return this.formBuilder.group({
       payee: ['', Validators.compose([Validators.required])],
-      amount: [null, Validators.compose([Validators.required])]
+      amount: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])]
     });
   }
 
@@ -81,7 +91,7 @@ export class AddExpenseModalComponent implements OnInit {
   createShare(): FormGroup {
     return this.formBuilder.group({
       spender: ['', Validators.compose([Validators.required])],
-      amount: [null, Validators.compose([Validators.required])]
+      amount: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])]
     });
   }
 
@@ -103,6 +113,10 @@ export class AddExpenseModalComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    // stop here if form is invalid
+    if (this.addExpenseForm.invalid) {
+      return;
+    }
     console.log(this.addExpenseForm.value);
   }
 

@@ -1,7 +1,7 @@
 <div>
   <div class="add-title">
     <h2 class="primary">Add a New Expense</h2>
-    <mat-slide-toggle color="primary" [(ngModel)]="isGroupExpense">
+    <mat-slide-toggle color="primary" [(ngModel)]="isGroupExpense" (change)="onChange()">
       Group-Expense
     </mat-slide-toggle>
   </div>
@@ -14,7 +14,7 @@
     <mat-form-field class="example-full-width">
       <input matInput placeholder="bill amount" formControlName="amount"
         [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
-      <mat-error *ngIf="submitted && f['amount'].errors">amount is required</mat-error>
+      <mat-error *ngIf="submitted && f['amount'].errors">valid amount is required</mat-error>
     </mat-form-field>
     <mat-form-field *ngIf="isGroupExpense">
       <mat-label>Group</mat-label>
@@ -37,8 +37,7 @@
             <mat-form-field class="example-full-width">
               <input matInput placeholder="amount" formControlName="amount"
                 [ngClass]="{ 'is-invalid': submitted && getPaymentsFormGroup(i).controls['amount'].errors }">
-              <mat-error *ngIf="submitted && getPaymentsFormGroup(i).controls['amount'].errors">amount is required
-              </mat-error>
+              <mat-error *ngIf="submitted && getPaymentsFormGroup(i).controls['amount'].errors">valid amount is required</mat-error>
             </mat-form-field>
             <button mat-icon-button color="primary" type="button" (click)="addPaymentRow()" *ngIf="i==0">
               <mat-icon>add_circle</mat-icon>
@@ -65,7 +64,7 @@
             <mat-form-field class="example-full-width">
               <input matInput placeholder="amount" formControlName="amount"
                 [ngClass]="{ 'is-invalid': submitted && getSharesFormGroup(i).controls['amount'].errors }">
-              <mat-error *ngIf="submitted && getSharesFormGroup(i).controls['amount'].errors">amount is required</mat-error>
+              <mat-error *ngIf="submitted && getSharesFormGroup(i).controls['amount'].errors">valid amount is required</mat-error>
             </mat-form-field>
             <button mat-icon-button color="primary" type="button" (click)="addShareRow()" *ngIf="i==0">
               <mat-icon>add_circle</mat-icon>
