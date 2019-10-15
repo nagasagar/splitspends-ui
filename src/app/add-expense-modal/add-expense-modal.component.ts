@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { User } from '../models/user';
-import { Expense } from '../models/expense';
 import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
 import { FriendsService, UserService, GroupsService, AuthenticationService } from '../services';
 import { Group } from '../models/group';
+import { Expense } from '../models/expense';
 import { Payment } from '../models/payment';
 import { Share } from '../models/share';
+import { ExpensesService } from '../services/expenses.service';
 
 @Component({
   selector: 'app-add-expense-modal',
@@ -31,6 +32,7 @@ export class AddExpenseModalComponent implements OnInit {
     private groupsService: GroupsService,
     private userService: UserService,
     private authService: AuthenticationService,
+    private expensesService: ExpensesService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -117,7 +119,35 @@ export class AddExpenseModalComponent implements OnInit {
     if (this.addExpenseForm.invalid) {
       return;
     }
-    console.log(this.addExpenseForm.value);
+    if (!this.isBillTotalvalid(this.addExpenseForm.value)) {
+      return;
+    }
+
+    this.expensesService.addExpense(this.addExpenseForm.value).subscribe(
+      () => {
+        this.snackBar.open('adding expense successful', 'close', {duration: 3000});
+        this.dialogRef.close();
+      },
+      error => {
+        this.snackBar.open(error.error.message, 'close');
+      });
+
+  }
+
+  isBillTotalvalid(e: Expense): boolean {
+    const total = Number(e.amount);
+    const paymentsTotal = e.payments.reduce((prev, cur) => {
+      return prev + Number(cur.amount);
+    }, 0);
+    const sharesTotal = e.shares.reduce((prev, cur) => {
+      return prev + Number(cur.amount);
+    }, 0);
+    if (total === paymentsTotal && total === sharesTotal) {
+      return true;
+    }
+    this.snackBar.open('invalid expense : total=' + total + ', paymentsTotal=' +
+     paymentsTotal + ', sharesTotal=' + sharesTotal + ' .', 'close');
+    return false;
   }
 
   close() {
