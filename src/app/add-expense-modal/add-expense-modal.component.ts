@@ -21,11 +21,12 @@ export class AddExpenseModalComponent implements OnInit {
   expense: Expense;
   friends: User[];
   groups: Group[];
-  isGroupExpense = true;
+  isGroupExpense = false;
   paymentsList: FormArray;
   sharesList: FormArray;
-  exp = { amount: '' };
-  // eligibleContributers: User[];
+  grp: Group;
+  //  exp = { amount: '' };
+  eligibleContributers: User[];
   constructor(
     public dialogRef: MatDialogRef<AddExpenseModalComponent>,
     private friendsService: FriendsService,
@@ -42,6 +43,7 @@ export class AddExpenseModalComponent implements OnInit {
       authService.getUserProfile().subscribe(user => {
         this.friends.push(user);
       });
+      this.eligibleContributers = this.friends;
     });
     groupsService.getUserGroups().subscribe(groups => this.groups = groups);
   }
@@ -62,7 +64,7 @@ export class AddExpenseModalComponent implements OnInit {
     this.addExpenseForm = this.formBuilder.group({
       detail: ['', Validators.compose([Validators.required])],
       amount: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])],
-      group: [null, Validators.compose([Validators.required])],
+      group: [null],
       payments: this.formBuilder.array([this.createPayment()]),
       shares: this.formBuilder.array([this.createShare()])
     });
@@ -73,12 +75,22 @@ export class AddExpenseModalComponent implements OnInit {
   onChange() {
     const groupFormControl = this.addExpenseForm.get('group');
     if (this.isGroupExpense) {
+      this.eligibleContributers = [];
       groupFormControl.setValidators(Validators.required);
     } else {
+      this.eligibleContributers = this.friends;
       groupFormControl.setValue(null);
       groupFormControl.clearValidators();
     }
     groupFormControl.updateValueAndValidity();
+  }
+
+  onGroupSelection() {
+    if (this.grp) {
+      this.groupsService.getGroupByID(this.grp.id).subscribe(group => {
+        this.eligibleContributers = group.members;
+      });
+    }
   }
 
   // payments formgroup
@@ -125,7 +137,7 @@ export class AddExpenseModalComponent implements OnInit {
 
     this.expensesService.addExpense(this.addExpenseForm.value).subscribe(
       () => {
-        this.snackBar.open('adding expense successful', 'close', {duration: 3000});
+        this.snackBar.open('adding expense successful', 'close', { duration: 3000 });
         this.dialogRef.close();
       },
       error => {
@@ -146,7 +158,7 @@ export class AddExpenseModalComponent implements OnInit {
       return true;
     }
     this.snackBar.open('invalid expense : total=' + total + ', paymentsTotal=' +
-     paymentsTotal + ', sharesTotal=' + sharesTotal + ' .', 'close');
+      paymentsTotal + ', sharesTotal=' + sharesTotal + ' .', 'close');
     return false;
   }
 

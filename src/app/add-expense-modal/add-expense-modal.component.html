@@ -18,7 +18,7 @@
     </mat-form-field>
     <mat-form-field *ngIf="isGroupExpense">
       <mat-label>Group</mat-label>
-      <mat-select formControlName="group" name="group" ngDefaultControl>
+      <mat-select formControlName="group" name="group" ngDefaultControl [(ngModel)]="grp" (ngModelChange)="onGroupSelection()">
         <mat-option *ngFor="let group of groups" [value]="group">{{group.name}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -31,7 +31,7 @@
             <mat-form-field>
               <mat-label>payee</mat-label>
               <mat-select formControlName="payee" name="payee" ngDefaultControl>
-                <mat-option *ngFor="let friend of friends" [value]="friend">{{friend.name}}</mat-option>
+                <mat-option *ngFor="let contributor of eligibleContributers" [value]="contributor">{{contributor.name}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="example-full-width">
@@ -58,7 +58,7 @@
             <mat-form-field>
               <mat-label>spender</mat-label>
               <mat-select formControlName="spender" name="spender" ngDefaultControl>
-                <mat-option *ngFor="let friend of friends" [value]="friend">{{friend.name}}</mat-option>
+                  <mat-option *ngFor="let contributor of eligibleContributers" [value]="contributor">{{contributor.name}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="example-full-width">
