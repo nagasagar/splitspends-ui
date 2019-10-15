@@ -4,16 +4,23 @@
       <mat-icon mat-list-icon>monetization_on</mat-icon>
       <h4 mat-line>{{expense.detail}} </h4>
       <h4 [innerHTML]= "expense | expenseRecord"></h4>
-      <p class="grey" mat-line><mat-icon class="small" >group</mat-icon>{{expense.group.name}} , <mat-icon class="small" >attach_money</mat-icon>{{expense.amount}}</p>
+      <p class="grey" *ngIf = "expense.group" mat-line>
+        <mat-icon class="small" >group</mat-icon>{{expense.group.name}} ,
+        <mat-icon class="small" >attach_money</mat-icon>{{expense.amount}}
+      </p>
+      <p class="grey" *ngIf = "!expense.group" mat-line>
+          <mat-icon class="small" >group</mat-icon> Non-Group Expense,
+          <mat-icon class="small" >attach_money</mat-icon>{{expense.amount}}
+        </p>
       <button mat-icon-button nofocus [matMenuTriggerFor]="menu" (click)="onTriggerMenu(expense)">
         <mat-icon>more_vert</mat-icon>
       </button>
     </mat-list-item>
   </mat-list>
   <mat-menu #menu="matMenu">
-      <button mat-menu-item nofocus (click)="deleteExpense()">
-        <mat-icon mat-list-icon>person_add_disabled</mat-icon> UnFriend
-      </button>
+      <button mat-menu-item nofocus (click)="viewExpense()"><mat-icon mat-list-icon>remove_red_eye</mat-icon> View</button>
+      <button mat-menu-item nofocus (click)="editExpense()"><mat-icon mat-list-icon>edit</mat-icon> Edit</button>
+      <button mat-menu-item nofocus (click)="deleteExpense()"><mat-icon mat-list-icon>delete</mat-icon> Delete</button>
   </mat-menu>
 </cdk-virtual-scroll-viewport>
 <button mat-fab class="fab-bottom-right" aria-label="add new expense" (click)="addExpense()">
