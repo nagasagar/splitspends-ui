@@ -26,7 +26,7 @@ import {
   MatSnackBarModule,
   MatSliderModule,
   MatSlideToggleModule,
-  MatExpansionModule
+  MatExpansionModule,
 } from '@angular/material';
 
 import { MatDialogModule } from '@angular/material/dialog';
@@ -57,7 +57,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatMenuModule,
     MatSnackBarModule,
     MatSlideToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTableModule
   ],
   exports: [
     CommonModule,

@@ -1,7 +1,7 @@
 <cdk-virtual-scroll-viewport class="list-container lg" [itemSize]="52.5">
   <mat-list>
     <mat-list-item *ngFor="let expense of expenses">
-      <mat-icon mat-list-icon>monetization_on</mat-icon>
+      <mat-icon mat-list-icon>receipt</mat-icon>
       <h4 mat-line>{{expense.detail}} </h4>
       <h4 [innerHTML]= "expense | expenseRecord"></h4>
       <p class="grey" *ngIf = "expense.group" mat-line>

@@ -1,0 +1,10 @@
+mat-icon.small{
+  font-size: 18px;
+  vertical-align: bottom;
+  padding-top: 4px;
+  padding-right: 4px;
+}
+
+p.grey{
+  color: grey;
+}

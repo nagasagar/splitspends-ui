@@ -1,0 +1,45 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary">{{expense.detail}}</h2>
+  </div>
+  <mat-card>
+    <mat-form-field class="example-full-width">
+      <mat-label>Amount : </mat-label>
+      <input matInput value={{expense.amount}} disabled="true">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Group : </mat-label>
+      <input matInput value={{expense.group.name}} disabled="true">
+    </mat-form-field>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <mat-card>
+    <mat-card-title>
+      <h4>Payments</h4>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let payment of expense.payments">
+          <mat-icon mat-list-icon>monetization_on</mat-icon>
+          <h4 mat-line>{{payment.payee.name}} </h4>
+          <h4><b>{{payment.amount}}</b></h4>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+  <mat-divider></mat-divider>
+  <mat-card>
+    <mat-card-title>
+      <h4>Shares</h4>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let share of expense.shares">
+          <mat-icon mat-list-icon>monetization_on</mat-icon>
+          <h4 mat-line>{{share.spender.name}} </h4>
+          <h4><b>{{share.amount}}</b></h4>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -3,6 +3,7 @@ import { Expense } from '../models/expense';
 import { MatMenuTrigger, MatDialog, MatSnackBar } from '@angular/material';
 import { ExpensesService } from '../services/expenses.service';
 import { AddExpenseModalComponent } from '../add-expense-modal/add-expense-modal.component';
+import { ViewExpenseModalComponent } from '../view-expense-modal/view-expense-modal.component';
 
 @Component({
   selector: 'app-expenses',
@@ -39,6 +40,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   viewExpense() {
+    const dialogRef = this.dialog.open(ViewExpenseModalComponent, {
+      width: '750px',
+      data: {expense: this.selectedExpense}
+    });
   }
 
   editExpense() {
@@ -48,7 +53,7 @@ export class ExpensesComponent implements OnInit {
   }
   addExpense() {
     const dialogRef = this.dialog.open(AddExpenseModalComponent, {
-      width: '750px'
+      width: '500px'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();

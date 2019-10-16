@@ -24,6 +24,7 @@ import { GroupMembersComponent } from './group-members/group-members.component';
 import { GroupExpensesComponent } from './group-expenses/group-expenses.component';
 import { ExpenseRecordPipe } from './pipes/expense-record.pipe';
 import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.component';
+import { ViewExpenseModalComponent } from './view-expense-modal/view-expense-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AddExpenseModalComponent } from './add-expense-modal/add-expense-modal.
     GroupMembersComponent,
     GroupExpensesComponent,
     ExpenseRecordPipe,
-    AddExpenseModalComponent
+    AddExpenseModalComponent,
+    ViewExpenseModalComponent
   ],
   imports: [
     BrowserModule,
