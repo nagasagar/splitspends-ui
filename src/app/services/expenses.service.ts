@@ -19,4 +19,9 @@ export class ExpensesService {
   addExpense(expense: Expense): Observable<any> {
     return this.http.post<any>(environment.apiUrl + '/expenses', expense, httpOptions);
   }
+
+  deleteExpenseByID(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/expenses/${id}`;
+    return this.http.delete<any>(url, httpOptions);
+  }
 }

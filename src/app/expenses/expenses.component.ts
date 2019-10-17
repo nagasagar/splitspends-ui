@@ -50,6 +50,13 @@ export class ExpensesComponent implements OnInit {
   }
 
   deleteExpense() {
+    this.expensesService.deleteExpenseByID(this.selectedExpense.id).subscribe(() => {
+      this.snackBar.open('expense deleted successful', 'close', {duration: 3000});
+      this.ngOnInit();
+    },
+    error => {
+      this.snackBar.open(error.error.message, 'close', {duration: 3000});
+    });
   }
   addExpense() {
     const dialogRef = this.dialog.open(AddExpenseModalComponent, {
