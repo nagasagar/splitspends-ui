@@ -10,8 +10,8 @@ import { Expense } from '../models/expense';
 export class ViewExpenseModalComponent implements OnInit {
 
   expense: Expense;
-
   payeeColumns: string[] = ['payee', 'amount'];
+
   constructor(
     public dialogRef: MatDialogRef<ViewExpenseModalComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any

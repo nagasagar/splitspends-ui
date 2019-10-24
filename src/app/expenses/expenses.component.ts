@@ -47,6 +47,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   editExpense() {
+    const dialogRef = this.dialog.open(AddExpenseModalComponent, {
+      width: '750px',
+      data: {expense: this.selectedExpense}
+    });
   }
 
   deleteExpense() {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { User } from '../models/user';
-import { MatDialogRef, MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MatDialog, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { FriendsService, UserService, GroupsService, AuthenticationService } from '../services';
 import { Group } from '../models/group';
 import { Expense } from '../models/expense';
@@ -24,8 +24,6 @@ export class AddExpenseModalComponent implements OnInit {
   isGroupExpense = false;
   paymentsList: FormArray;
   sharesList: FormArray;
-  grp: Group;
-  //  exp = { amount: '' };
   eligibleContributers: User[];
   constructor(
     public dialogRef: MatDialogRef<AddExpenseModalComponent>,
@@ -36,8 +34,10 @@ export class AddExpenseModalComponent implements OnInit {
     private expensesService: ExpensesService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    this.expense = data.expense;
     friendsService.getUserFriends().subscribe(friends => {
       this.friends = friends;
       authService.getUserProfile().subscribe(user => {
@@ -70,6 +70,25 @@ export class AddExpenseModalComponent implements OnInit {
     });
     this.paymentsList = this.addExpenseForm.get('payments') as FormArray;
     this.sharesList = this.addExpenseForm.get('shares') as FormArray;
+    if (this.expense) {
+      this.addExpenseForm.patchValue({
+        detail: this.expense.detail,
+        amount: this.expense.amount,
+        group: this.expense.group,
+      });
+      if (this.expense.group) {
+        this.isGroupExpense = true;
+      }
+      this.paymentsList.removeAt(0);
+      for (const payment of this.expense.payments) {
+        this.paymentsList.push(this.patchPayment(payment));
+      }
+      this.sharesList.removeAt(0);
+      for (const share of this.expense.shares) {
+        this.sharesList.push(this.patchShare(share));
+      }
+    }
+
   }
 
   onChange() {
@@ -86,8 +105,8 @@ export class AddExpenseModalComponent implements OnInit {
   }
 
   onGroupSelection() {
-    if (this.grp) {
-      this.groupsService.getGroupByID(this.grp.id).subscribe(group => {
+    if (this.addExpenseForm.value.group) {
+      this.groupsService.getGroupByID(this.addExpenseForm.value.group.id).subscribe(group => {
         this.eligibleContributers = group.members;
       });
     }
@@ -101,12 +120,36 @@ export class AddExpenseModalComponent implements OnInit {
     });
   }
 
+  patchPayment(payment: Payment): FormGroup {
+    const paymentRow = this.formBuilder.group({
+      payee: ['', Validators.compose([Validators.required])],
+      amount: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])]
+    });
+    paymentRow.patchValue({
+      payee: payment.payee,
+      amount: payment.amount
+    });
+    return paymentRow;
+  }
+
   // shares formgroup
   createShare(): FormGroup {
     return this.formBuilder.group({
       spender: ['', Validators.compose([Validators.required])],
       amount: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])]
     });
+  }
+
+  patchShare(share: Share): FormGroup {
+    const shareRow = this.formBuilder.group({
+      spender: ['', Validators.compose([Validators.required])],
+      amount: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]*\.?[0-9]+$')])]
+    });
+    shareRow.patchValue({
+      spender: share.spender,
+      amount: share.amount
+    });
+    return shareRow;
   }
 
   addPaymentRow() {
@@ -176,5 +219,13 @@ export class AddExpenseModalComponent implements OnInit {
   getSharesFormGroup(index): FormGroup {
     const formGroup = this.sharesList.controls[index] as FormGroup;
     return formGroup;
+  }
+
+  compareFn(c1: User, c2: User): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+
+  compareGrpFn(c1: Group, c2: Group): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 }
