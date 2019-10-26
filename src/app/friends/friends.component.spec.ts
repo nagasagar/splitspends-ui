@@ -62,7 +62,8 @@ describe('FriendsComponent', () => {
     component.selectedFriend = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: null
     };
     spyOn(component.dialog, 'open').and.returnValue(dialogRefSpyObj);
     spyOn(component, 'ngOnInit');
@@ -79,7 +80,8 @@ describe('FriendsComponent', () => {
     component.selectedFriend = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: 'https://some-randon-url-toimage'
     };
     spyOn(friendsService, 'removeUserFriend').and.returnValue(of({}));
     spyOn(component, 'ngOnInit');
@@ -94,7 +96,8 @@ describe('FriendsComponent', () => {
     component.selectedFriend = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: 'https://some-randon-url-toimage'
     };
     const response = {
       error: {

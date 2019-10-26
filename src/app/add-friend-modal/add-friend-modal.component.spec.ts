@@ -119,7 +119,8 @@ describe('AddFriendModalComponent', () => {
     const frnd = {
       id: 10101,
       name: 'Fake User',
-      email: 'fake@splitspends.com'
+      email: 'fake@splitspends.com',
+      imageUrl: 'https://some-randon-url-toimage'
     };
     component.friend =  frnd;
     const response =  {
@@ -141,7 +142,8 @@ describe('AddFriendModalComponent', () => {
     const frnd = {
       id: 10101,
       name: 'Fake User',
-      email: 'fake@splitspends.com'
+      email: 'fake@splitspends.com',
+      imageUrl: null
     };
     component.friend =  frnd;
     const response =  {

@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { GroupMembersComponent } from './group-members.component';
-import { routes } from '../app-routing.module';
 import { ActivatedRoute, Params, Data, Route, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatSnackBar, MatMenuModule, MatSelectModule } from '@angular/material';
@@ -11,7 +10,6 @@ import { GroupsService, FriendsService } from '../services';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { throwError } from 'rxjs/internal/observable/throwError';
 
 const grp = {
   id: 12,
@@ -20,12 +18,14 @@ const grp = {
     {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: null
     },
     {
       id: 101,
       name: 'sagar',
-      email: 'sagar@gmail.com'
+      email: 'sagar@gmail.com',
+      imageUrl: null
     }
   ]
 };
@@ -33,7 +33,8 @@ const friends = [
   {
     id: 101,
     name: 'sagar',
-    email: 'sagar@gmail.com'
+    email: 'sagar@gmail.com',
+    imageUrl: null
   },
   {
     id: 8,
@@ -43,7 +44,8 @@ const friends = [
   {
     id: 9,
     name: 'sireesha',
-    email: 'sireesha@gmail.com'
+    email: 'sireesha@gmail.com',
+    imageUrl: null
   }
 ];
 const groupServiceMock = {
@@ -94,7 +96,8 @@ describe('GroupMembersComponent', () => {
       {
         id: 9,
         name: 'sireesha',
-        email: 'sireesha@gmail.com'
+        email: 'sireesha@gmail.com',
+        imageUrl: null
       }
     ];
     expect(component).toBeTruthy();
@@ -105,7 +108,8 @@ describe('GroupMembersComponent', () => {
     const member = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: null
     };
     component.onTriggerMenu(member);
     expect(component.selectedMember).toBe(member);
@@ -115,7 +119,8 @@ describe('GroupMembersComponent', () => {
     const potmem = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: null
     };
     component.potentialMember = potmem;
     component.group = {
@@ -125,7 +130,8 @@ describe('GroupMembersComponent', () => {
         {
           id: 101,
           name: 'sagar',
-          email: 'sagar@gmail.com'
+          email: 'sagar@gmail.com',
+          imageUrl: null
         }
       ]
     };
@@ -142,7 +148,8 @@ describe('GroupMembersComponent', () => {
     component.selectedMember = {
       id: 8,
       name: 'sample',
-      email: 'sample@gmail.com'
+      email: 'sample@gmail.com',
+      imageUrl: null
     };
     component.group = {
       id: 12,
@@ -151,7 +158,8 @@ describe('GroupMembersComponent', () => {
         {
           id: 101,
           name: 'sagar',
-          email: 'sagar@gmail.com'
+          email: 'sagar@gmail.com',
+          imageUrl: null
         }
       ]
     };

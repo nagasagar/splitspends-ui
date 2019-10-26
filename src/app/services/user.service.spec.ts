@@ -47,7 +47,6 @@ describe('UserService', () => {
     service.saveUserProfile();
     expect(authService.getUserProfile).toHaveBeenCalledWith();
     expect(tokenService.saveUsername).toHaveBeenCalledWith('Fake User');
-    expect(tokenService.saveAuthority).toHaveBeenCalledWith(undefined);
     expect(tokenService.saveImageUrl).toHaveBeenCalledWith('https://some-randon-url-toimage');
     expect(tokenService.saveEmail).toHaveBeenCalledWith('fake@splitspends.com');
 

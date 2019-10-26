@@ -18,10 +18,10 @@ export class FriendsService {
   }
 
   addUserFriend(user: User): Observable<any> {
-    return this.http.post<any>(environment.apiUrl + '/friends/addfriend', user, httpOptions);
+    return this.http.post<any>(environment.apiUrl + '/addfriend', user, httpOptions);
   }
 
   removeUserFriend(user: User): Observable<any> {
-    return this.http.post<any>(environment.apiUrl + '/friends/removefriend', user , httpOptions);
+    return this.http.post<any>(environment.apiUrl + '/removefriend', user , httpOptions);
   }
 }

@@ -72,13 +72,14 @@ describe('FriendsService', () => {
     const user = {
       id: 10101,
       name: 'Fake Friend',
-      email: 'friend@splitspends.com'
+      email: 'friend@splitspends.com',
+      imageUrl: 'https://some-randon-url-toimage'
     };
     service.removeUserFriend(user).subscribe((result: any) => {
       expect(result).toBe(response);
     });
     // Expect a call to this URL
-    const req = httpTestingController.expectOne(environment.apiUrl + '/friends/removefriend');
+    const req = httpTestingController.expectOne(environment.apiUrl + '/removefriend');
     // Assert that the request is a GET.
     expect(req.request.method).toEqual('POST');
     // Respond with this data when called
@@ -99,13 +100,14 @@ describe('FriendsService', () => {
     const user = {
       id: 10101,
       name: 'Fake Friend',
-      email: 'friend@splitspends.com'
+      email: 'friend@splitspends.com',
+      imageUrl: 'https://some-randon-url-toimage'
     };
     service.addUserFriend(user).subscribe((result: any) => {
       expect(result).toBe(response);
     });
     // Expect a call to this URL
-    const req = httpTestingController.expectOne(environment.apiUrl + '/friends/addfriend');
+    const req = httpTestingController.expectOne(environment.apiUrl + '/addfriend');
     // Assert that the request is a GET.
     expect(req.request.method).toEqual('POST');
     // Respond with this data when called
