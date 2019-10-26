@@ -16,7 +16,7 @@ export class ExpensesService {
     return this.http.get<any>(environment.apiUrl + '/expenses', httpOptions);
   }
 
-  addExpense(expense: Expense): Observable<any> {
+  saveExpense(expense: Expense): Observable<any> {
     return this.http.post<any>(environment.apiUrl + '/expenses', expense, httpOptions);
   }
 

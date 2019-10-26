@@ -76,7 +76,8 @@
         </div>
       </div>
     </div>
-    <button mat-stroked-button color="primary" type="submit" class="btn-block">Create</button>
+    <button *ngIf="expense" mat-stroked-button color="primary" type="submit" class="btn-block">Save</button>
+    <button *ngIf="!expense" mat-stroked-button color="primary" type="submit" class="btn-block">Create</button>
     <button mat-stroked-button type="button" class="btn-block" (click)="close()">Cancel</button>
   </form>
 </div>

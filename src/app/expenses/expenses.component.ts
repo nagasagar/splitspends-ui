@@ -51,6 +51,9 @@ export class ExpensesComponent implements OnInit {
       width: '750px',
       data: {expense: this.selectedExpense}
     });
+    dialogRef.afterClosed().subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   deleteExpense() {
@@ -64,7 +67,7 @@ export class ExpensesComponent implements OnInit {
   }
   addExpense() {
     const dialogRef = this.dialog.open(AddExpenseModalComponent, {
-      width: '500px'
+      width: '750px'
     });
     dialogRef.afterClosed().subscribe(() => {
       this.ngOnInit();

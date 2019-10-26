@@ -7,7 +7,7 @@
       <mat-label>Amount : </mat-label>
       <input matInput value={{expense.amount}} disabled="true">
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="example-full-width" *ngIf="expense.group" >
       <mat-label>Group : </mat-label>
       <input matInput value={{expense.group.name}} disabled="true">
     </mat-form-field>

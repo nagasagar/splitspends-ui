@@ -37,7 +37,9 @@ export class AddExpenseModalComponent implements OnInit {
     private snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.expense = data.expense;
+    if (data) {
+      this.expense = data.expense;
+    }
     friendsService.getUserFriends().subscribe(friends => {
       this.friends = friends;
       authService.getUserProfile().subscribe(user => {
@@ -78,6 +80,9 @@ export class AddExpenseModalComponent implements OnInit {
       });
       if (this.expense.group) {
         this.isGroupExpense = true;
+        this.groupsService.getGroupByID(this.expense.group.id).subscribe(group => {
+          this.eligibleContributers = group.members;
+        });
       }
       this.paymentsList.removeAt(0);
       for (const payment of this.expense.payments) {
@@ -97,15 +102,15 @@ export class AddExpenseModalComponent implements OnInit {
       this.eligibleContributers = [];
       groupFormControl.setValidators(Validators.required);
     } else {
-      this.eligibleContributers = this.friends;
       groupFormControl.setValue(null);
       groupFormControl.clearValidators();
+      this.eligibleContributers = this.friends;
     }
     groupFormControl.updateValueAndValidity();
   }
 
   onGroupSelection() {
-    if (this.addExpenseForm.value.group) {
+    if (this.isGroupExpense && this.addExpenseForm.value.group) {
       this.groupsService.getGroupByID(this.addExpenseForm.value.group.id).subscribe(group => {
         this.eligibleContributers = group.members;
       });
@@ -178,14 +183,29 @@ export class AddExpenseModalComponent implements OnInit {
       return;
     }
 
-    this.expensesService.addExpense(this.addExpenseForm.value).subscribe(
-      () => {
-        this.snackBar.open('adding expense successful', 'close', { duration: 3000 });
-        this.dialogRef.close();
-      },
-      error => {
-        this.snackBar.open(error.error.message, 'close');
-      });
+    if (this.expense) {
+      const editedExpense = this.addExpenseForm.value;
+      editedExpense.id = this.expense.id;
+      this.expensesService.saveExpense(editedExpense).subscribe(
+        () => {
+          this.snackBar.open('edting expense successful', 'close', { duration: 3000 });
+          this.dialogRef.close();
+        },
+        error => {
+          this.snackBar.open(error.error.message, 'close');
+        });
+    } else {
+      this.expensesService.saveExpense(this.addExpenseForm.value).subscribe(
+        () => {
+          this.snackBar.open('adding expense successful', 'close', { duration: 3000 });
+          this.dialogRef.close();
+        },
+        error => {
+          this.snackBar.open(error.error.message, 'close');
+        });
+    }
+
+
 
   }
 
