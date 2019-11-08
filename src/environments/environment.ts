@@ -5,11 +5,11 @@
 export const environment = {
   production: false,
   serverUrl: 'http://localhost:4200',
-  apiUrl: 'http://localhost:8080',
+  apiUrl: 'https://splitspends.herokuapp.com',
   accessToken: 'accessToken',
   oAuth2RedirectUrl: 'http://localhost:4200/oauth2/redirect',
-  googleAuthUrl: 'http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:4200/oauth2/redirect',
-  facebookAuthUrl: 'http://localhost:8080/oauth2/authorize/facebook?redirect_uri=http://localhost:4200/oauth2/redirect'
+  googleAuthUrl: 'https://splitspends.herokuapp.com/oauth2/authorize/google?redirect_uri=http://localhost:4200/oauth2/redirect',
+  facebookAuthUrl: 'https://splitspends.herokuapp.com/oauth2/authorize/facebook?redirect_uri=http://localhost:4200/oauth2/redirect'
 };
 
 /*
