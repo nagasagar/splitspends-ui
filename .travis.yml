@@ -1,0 +1,34 @@
+dist: trusty
+sudo: false
+language: node_js
+node_js:
+- '8'
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+cache:
+  directories:
+  - "./node_modules"
+install:
+- npm install
+script:
+- npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+env:
+  matrix:
+  - CI=true
+  global:
+  - secure: SnWBMQqkCggPvbg25kdsC7wUqsJzUYaUBB6G4wfUv/m1v/VHrTFPjgfbAT4mylDxw6WPJwRC/ys1qqgr0V6rCwK4Kim3TF+hHdBKedfCpfrBYX1EpDZtGaBHw/V1vEwWFgPpiSl5uZFS9D7vpHUWhE/j+HaO9joPMW5YiZ8Gv8AwfNUhpBBWxq97w4+BlMLicRGDD9c57PiopabhF1QXLFFfeBMmvLBdxd+2YuaD6nYTEIR+BOIagHv4dw2761qkj64zG3yY0QZxX+HxhPb6jBgIA7xaeHQBGqz92hzNYK9qzJjdUFA4vUFzBUsGT9b2mSOJwgvs3bhUBcz0qYmKNzgI+Iym+R00LHryt/viRreEI2uF70f1VuEChw1FpFxeYJqtXSlOWhh6FyCSGukoE4Hyf9uteqre7klXnuIhgOfuxdx2JPv9I93Mg8dRVEINX1Hw/KS5zgDogC8NxprM9PWVypJKm4K905NWV8rZ4e3obzyUTVC1ITOImDuhTSCC/H5Idje2Bj5TGJGMqvOVtqHkGJ3YwvRsVS/RsYih/lBi0SkxTbyM0NPkXpuyoJ4I6mTkT1DTn/HlMzWRnVhccfaYliwlqkJJK3soJegpd/BP0ifwBPwxjsDo0o8mPNQGjHwiWiGm2f2xN4eUa6/0fhe16Nik3u3DL2pEBqOs63w=
+  - secure: lT2a6NTkncCu1Ktk2/1WfFvPuXnpxL/QSBB86GuGDVeXHV/1yl1WnZhfBrn7QgbT3VlkulMzuyZb8kkcZddLg9HkvX6qXdl+Ab9ijfjA3ZCknvq6XCqVGMRSemHvWCr05CF4bckS4ZdefVjVNyA8D7ywUyQMIYJ7XZVN8xiUE8OH4nP8s7Pu67gZlQBATWHRe7WF5mqCrz3Rgo5lWc5GS4RIJNe5mEk4SkLrjVEDn+XG7oBXqFU70eUISwRoDRIiijR535IqAwAmoPGda1MROqhYhMd18Mbg20GF9KArJ0YUgdFbHA/FubPCChr7iu1IXl7Y/WkXAzKux7b0R0m4WpU7nUhYLnA07IK+hMFKLtl8Tqto0m+jV50MGEKEI5OwMZzbyAv/jqgI5p0yXmlgjuDXLeGNHW6oyk6xZ+vH2begIDI6c44pc1rHwT3602MRuch1OZzMtzFv58J3t7rRMa2ZxK3xjJeLUY2ds4JpD7uRn2PJgSRN543qGeAxxATD5S2TeRVbxWXO3f38TlgPq/ovP7X4aleMF1lGavz/8vFkO/+xgLeuetIZ/S+4yICgdn0iHO0aeJ8xfvrF+lEWTxI7MuDlo8/1247q/y7orqGHeLOKf8K405q+lRlY9NCUMkxqn0S3EdWk5mpkDXC16GGCJYVLx0QOxGZizJghcg0=
+  - secure: JciOfyXHAlyiq5II0A+cc6lM81xFDZj1eTUp2gbt8X/hzislpMJDkNoQRg8YBwhbHfR7LzJGWOlkyIHUZ71WtvNp2YN1r5kGx54d3EueHSGyCAmQTEjerU/u2dXwMmATR8WVfh2bQvRczLKv38joP2dkf5Rc+YphSiFIr1YDEprQOScGGRhLueFIKvLXDDWMuHqotR1G8wFfyW6qrs6ACHYEyuUxVpwnwLwOOC4uqIWbxa4ChCcwP0aodnWXPyQ8zyfpMYwnhNbupUylx0TeUmEGosGnkAob5BqaSY9abMM4yrRgnRhtJjSdT2OuBkhx9MvAcRLkaV9kxIhCfK1D9a6ZY8FQkhSp5xT8Nqh+5lcyG/xO/JfE9IuDoOC7h0vOi2kMaUPLmSPrhH10ZaEE2g/1yCu4EO+1X82P9h+9FVRsIierbgh3c3rfcKOuxqpWYKrWJzpAUo1NRgKI2OzKUr3lcmTYJyXcoIt7JDQjWwMydwYnAnUxb/7ebFweDBKIoxgs49TnP9CZ2TiTHDBdO3Qgf7lQgwdNfWRLXHlC+t3+d5lZlLMveXneCrJe8IBaHuVp2RweOSXFf02DYR1YCj9iL/D/MDa4syaKN0b2Y+jjCxRumdHGq5t0HLSEKdhHt8Qz1LSCIyR25T0UOOADvpqXyhopobMk+WRMt06+pkw=
+before_deploy:
+- npm install netlify-cli -g
+- npm run build
+deploy:
+  provider: script
+  script: netlify deploy -s $NETLIFY_SITE_ID -t $NETLIFY_ACCESS_TOKEN -p ./build
+  skip_cleanup: true
+  on:
+    branch: master
