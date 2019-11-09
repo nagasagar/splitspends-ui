@@ -24,7 +24,7 @@ env:
   - secure: JciOfyXHAlyiq5II0A+cc6lM81xFDZj1eTUp2gbt8X/hzislpMJDkNoQRg8YBwhbHfR7LzJGWOlkyIHUZ71WtvNp2YN1r5kGx54d3EueHSGyCAmQTEjerU/u2dXwMmATR8WVfh2bQvRczLKv38joP2dkf5Rc+YphSiFIr1YDEprQOScGGRhLueFIKvLXDDWMuHqotR1G8wFfyW6qrs6ACHYEyuUxVpwnwLwOOC4uqIWbxa4ChCcwP0aodnWXPyQ8zyfpMYwnhNbupUylx0TeUmEGosGnkAob5BqaSY9abMM4yrRgnRhtJjSdT2OuBkhx9MvAcRLkaV9kxIhCfK1D9a6ZY8FQkhSp5xT8Nqh+5lcyG/xO/JfE9IuDoOC7h0vOi2kMaUPLmSPrhH10ZaEE2g/1yCu4EO+1X82P9h+9FVRsIierbgh3c3rfcKOuxqpWYKrWJzpAUo1NRgKI2OzKUr3lcmTYJyXcoIt7JDQjWwMydwYnAnUxb/7ebFweDBKIoxgs49TnP9CZ2TiTHDBdO3Qgf7lQgwdNfWRLXHlC+t3+d5lZlLMveXneCrJe8IBaHuVp2RweOSXFf02DYR1YCj9iL/D/MDa4syaKN0b2Y+jjCxRumdHGq5t0HLSEKdhHt8Qz1LSCIyR25T0UOOADvpqXyhopobMk+WRMt06+pkw=
 before_deploy:
 - npm install netlify-cli -g
-- npm run build
+- npm run build --configuration=test
 deploy:
   provider: script
   script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client --prod
