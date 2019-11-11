@@ -1,11 +1,16 @@
 version: '3'
 services:
   splitspends-ui:
-    image: nagasagar/splitspends-ui:dev
+    image: nagasagar/splitspends-ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+  splitspends-ui-tests:
+    image: nagasagar/splitspends-ui-test
     build:
       context: .
       dockerfile: Dockerfile.dev
     ports:
       - "4200:4200"
-    volumes:
-      - .:/app
