@@ -35,6 +35,7 @@ after_success:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 - docker-compose build
 - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+- docker-compose --file docker-compose-test.yml build
 - docker tag $TEST_IMAGE_NAME:latest $TEST_IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME
 - docker push $TEST_IMAGE_NAME

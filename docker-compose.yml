@@ -7,10 +7,3 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
-  splitspends-ui-tests:
-    image: nagasagar/splitspends-ui-test
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    ports:
-      - "4200:4200"
