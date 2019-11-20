@@ -48,8 +48,7 @@ jobs:
       - npm run build -- --configuration=test
       deploy:
         provider: script
-        script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client
-        --prod
+        script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client --prod
       skip_cleanup: true
       on:
       branch: master
