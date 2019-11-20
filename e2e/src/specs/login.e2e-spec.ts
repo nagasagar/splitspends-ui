@@ -19,6 +19,12 @@ describe('workspace-project App', () => {
     expect(await browser.getCurrentUrl()).toEqual(browser.baseUrl + 'home/friends');
   });
 
+  it('test navigation to registration page from login page', async () => {
+    await page.navigate();
+    await page.clickOnRegisterBtn();
+    expect(await browser.getCurrentUrl()).toEqual(browser.baseUrl + 'register');
+  });
+
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);

@@ -25,6 +25,10 @@ export class LoginPage {
     await this.loginBtn.click();
   }
 
+  async clickOnRegisterBtn(): Promise<void> {
+    await this.registerBtn.click();
+  }
+
   async performLogin(username: string, passwrd: string): Promise<void> {
     browser.waitForAngularEnabled(false);
     await this.setUserName(username);
