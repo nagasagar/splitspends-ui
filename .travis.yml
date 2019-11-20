@@ -31,6 +31,7 @@ jobs:
     - stage: unit_tests
       script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
     - stage: build_docker_images
+      if: branch = master
       script:
       - export COMMIT=${TRAVIS_COMMIT::7}
       - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG";else echo "$TRAVIS_BRANCH--$COMMIT";
@@ -43,6 +44,7 @@ jobs:
       - docker push $IMAGE_NAME
       - docker push $TEST_IMAGE_NAME
     - stage: deploy_to_test_environment
+      if: branch = master
       script: skip
       before_deploy:
       - npm install netlify-cli -g
