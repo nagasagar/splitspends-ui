@@ -15,19 +15,22 @@ env:
   - secure: IW+X+bXbVmhxAT+M/3AW4RDoHWTDi1tUUTkMbh5TpI0LlwvM9qs3UAxASppJ8DSLcUtI3vx3qW2QsfLi3qma3tFgdxSbKaGv81fMeWHWdWaIy0sIr4AQnZTIUWtukx6qNciMtp0wuHDXku/1C266Vg6xh1+XNHF4yeiYDZSBb97MQ5joVdj1/bbiDTc190kKz+2ls2EE9IGq7lDCFkefq9pPbLb5oQXTafB8B+2TmhDtk8mEU9RBM6svw58blM7lbTP5CVv8+w94BQD1zP1xqTx6ksbdKcQ8v3zn2PE1925M5aOd6Sp9axYtXbqBioPyNTmzirZ/VSOfdXrcOiLpGa4/yv4FLR0eTFZDmr/28INOV8XGr5ZK8eP8rg093irqh/G6eCIqa6vDbPyPFJHRRiyp4EqjewLyuN5WeBRAsV3hQMWZFOgkHBji/hjF4XZos/nXnQgwP8FocqzLUE0cTxA5lIlYxG+jPqQri9BtLP0RQr/QZK/RG2hzahoHJVgTYaeecM9SkBTKoEXcRTN+hySv+qTAmLZ/javByrs1j7jGRIkbkflNI0f/nHvkMnDUyEWjMWqOye3e9mlm2UR2XtTEXdU7x5vSZWqsXwFHdnsIlmt5JWpcAhqB7wNSBYWZjO3slKOEijVVTNu8SRLQ0GWBUA0hGSKzr1/WMpor67g=
 node_js:
 - 12.9.0
-addons:
-  apt:
-    sources:
-    - google-chrome
-    packages:
-    - google-chrome-stable
+
 cache:
   directories:
   - "./node_modules"
-install:
-- npm install
+
 jobs:
   include:
+    - stage: dependencies
+      addons:
+        apt:
+          sources:
+          - google-chrome
+          packages:
+          - google-chrome-stable
+      install:
+      - npm install
     - stage: unit_tests
       script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
     - stage: build_docker_images
