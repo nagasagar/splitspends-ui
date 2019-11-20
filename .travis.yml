@@ -48,8 +48,8 @@ jobs:
       - npm install netlify-cli -g
       - npm run build -- --configuration=test
       deploy:
+        skip_cleanup: true
         provider: script
         script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client --prod
-      skip_cleanup: true
-      on:
-      branch: master
+        on:
+          branch: master
