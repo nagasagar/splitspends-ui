@@ -26,26 +26,30 @@ cache:
   - "./node_modules"
 install:
 - npm install
-script:
-- npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-after_success:
-- export COMMIT=${TRAVIS_COMMIT::7}
-- export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG";else echo "$TRAVIS_BRANCH--$COMMIT";
-  fi`
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
-- docker-compose build
-- docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
-- docker-compose --file docker-compose-test.yml build
-- docker tag $TEST_IMAGE_NAME:latest $TEST_IMAGE_NAME:$TAG
-- docker push $IMAGE_NAME
-- docker push $TEST_IMAGE_NAME
-before_deploy:
-- npm install netlify-cli -g
-- npm run build -- --configuration=test
-deploy:
-  provider: script
-  script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client
-    --prod
-  skip_cleanup: true
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: unit_tests
+      script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+    - stage: build_docker_images
+      script:
+      - export COMMIT=${TRAVIS_COMMIT::7}
+      - export TAG=`if [ ! -z "$TRAVIS_TAG" ]; then echo "$TRAVIS_TAG";else echo "$TRAVIS_BRANCH--$COMMIT";
+        fi`
+      - docker-compose build
+      - docker tag $IMAGE_NAME:latest $IMAGE_NAME:$TAG
+      - docker-compose --file docker-compose-test.yml build
+      - docker tag $TEST_IMAGE_NAME:latest $TEST_IMAGE_NAME:$TAG
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+      - docker push $IMAGE_NAME
+      - docker push $TEST_IMAGE_NAME
+    - stage: deploy_to_test_environment
+      before_deploy:
+      - npm install netlify-cli -g
+      - npm run build -- --configuration=test
+      deploy:
+        provider: script
+        script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client
+        --prod
+      skip_cleanup: true
+      on:
+      branch: master
