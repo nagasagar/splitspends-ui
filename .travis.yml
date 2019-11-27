@@ -27,7 +27,7 @@ cache:
   - "./node_modules"
 install:
 - npm install
-- ./node_modules/protractor/bin/webdriver-manager update --versions.chrome 2.35
+- ./node_modules/protractor/bin/webdriver-manager update --versions.chrome latest
 jobs:
   include:
     - stage: unit_tests
