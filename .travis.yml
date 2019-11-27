@@ -21,6 +21,7 @@ addons:
     - google-chrome
     packages:
     - google-chrome-stable
+  sauce_connect: true
 cache:
   directories:
   - "./node_modules"
@@ -30,6 +31,24 @@ jobs:
   include:
     - stage: unit_tests
       script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+    - stage: e2e_tests
+      script: ng e2e
+    - stage: deploy_to_test_environment
+      if: branch = master
+      script: skip
+      before_deploy:
+      - npm install netlify-cli -g
+      - npm run build -- --configuration=test
+      deploy:
+        skip_cleanup: true
+        provider: script
+        script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client --prod
+        on:
+          branch: master
+    - stage: e2e_tests_netlify
+      if: branch = master
+      script:
+        - protractor ./e2e/protractor.conf.js
     - stage: build_docker_images
       if: branch = master
       script:
@@ -43,15 +62,3 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
       - docker push $IMAGE_NAME
       - docker push $TEST_IMAGE_NAME
-    - stage: deploy_to_test_environment
-      if: branch = master
-      script: skip
-      before_deploy:
-      - npm install netlify-cli -g
-      - npm run build -- --configuration=test
-      deploy:
-        skip_cleanup: true
-        provider: script
-        script: netlify deploy -s $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --dir ./dist/client --prod
-        on:
-          branch: master

@@ -7,7 +7,7 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 /**
  * @type { import("protractor").Config }
  */
-exports.config = {
+var config = {
   allScriptsTimeout: 11000,
   specs: [
     './src/**/*.e2e-spec.ts'
@@ -30,3 +30,15 @@ exports.config = {
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
   }
 };
+
+if (process.env.TRAVIS) {
+  config.sauceUser = process.env.SAUCE_USERNAME;
+  config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+  config.capabilities = {
+    'browserName': 'chrome',
+    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+    'build': process.env.TRAVIS_BUILD_NUMBER
+  };
+}
+
+exports.config = config;
