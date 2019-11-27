@@ -32,7 +32,8 @@ jobs:
     - stage: unit_tests
       script: npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
     - stage: e2e_tests
-      script: ng e2e
+      script:
+      - protractor ./e2e/protractor.conf.js
     - stage: deploy_to_test_environment
       if: branch = master
       script: skip
